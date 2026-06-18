@@ -105,6 +105,13 @@ class AudioSynth {
     this.playTone(150, 'sawtooth', 0.2, 0.1);
     this.playTone(80, 'sawtooth', 0.2, 0.1, 0.05);
   }
+
+  playBuzzer() {
+    this.init();
+    if (this.muted || !this.ctx) return;
+    this.playTone(130, 'sawtooth', 0.3, 0.12);
+    this.playTone(130, 'sawtooth', 0.3, 0.12, 0.08);
+  }
 }
 
 export const audio = new AudioSynth();

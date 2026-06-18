@@ -51,7 +51,7 @@ export default function PlayerProfile({ cheatMode }) {
         
         {/* Left Column: Avatar & Character Status (Vertically Centered and Grouped) */}
         <div className="md:col-span-5 bg-black border-4 border-electric-purple pixel-border-purple p-4 flex flex-col items-center justify-center shadow-[0_0_10px_rgba(138,43,226,0.2)]">
-          <div className="w-full flex flex-col items-center space-y-4">
+          <div className="w-full flex flex-col items-center space-y-6">
             
             {/* Avatar Details */}
             <div className="w-full text-center flex flex-col items-center">
@@ -88,7 +88,7 @@ export default function PlayerProfile({ cheatMode }) {
             </div>
 
             {/* Level Stats Sheet (Centered directly below portrait) */}
-            <div className="w-full text-left font-arcade text-[8px] space-y-2 border-t border-slate-900 pt-3">
+            <div className="w-full text-left font-arcade text-[8px] space-y-2.5 border-t border-slate-900 pt-4">
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">LEVEL:</span>
                 <span className="text-white">{cheatMode ? '99 (MAX)' : '20'}</span>
@@ -110,29 +110,29 @@ export default function PlayerProfile({ cheatMode }) {
             </div>
 
             {/* Equipped Items (fills empty space and matches RPG theme) */}
-            <div className="w-full text-left font-arcade text-[8px] space-y-2 border-t border-slate-900 pt-3">
-              <div className="text-arcade-pink glow-pink uppercase tracking-widest mb-1 font-semibold">
+            <div className="w-full text-left font-arcade text-[10px] space-y-4 border-t border-slate-900 pt-4">
+              <div className="text-arcade-pink glow-pink uppercase tracking-widest mb-1 font-semibold text-[10px]">
                 EQUIPPED ITEMS
               </div>
               <div className="flex items-center space-x-2 text-slate-300">
-                <span className="text-[10px]">⚔</span>
+                <span className="text-[12px]">⚔</span>
                 <span className="text-slate-400">WEAPON:</span>
-                <span className="text-white font-mono">PYTHON_BLADE</span>
+                <span className="text-white font-mono text-[9px] md:text-[10px]">PYTHON_BLADE</span>
               </div>
               <div className="flex items-center space-x-2 text-slate-300">
-                <span className="text-[10px]">🛡</span>
+                <span className="text-[12px]">🛡</span>
                 <span className="text-slate-400">SHIELD:</span>
-                <span className="text-white font-mono">FASTAPI_BARRIER</span>
+                <span className="text-white font-mono text-[9px] md:text-[10px]">FASTAPI_BARRIER</span>
               </div>
               <div className="flex items-center space-x-2 text-slate-300">
-                <span className="text-[10px]">💍</span>
+                <span className="text-[12px]">💍</span>
                 <span className="text-slate-400">AMULET:</span>
-                <span className="text-white font-mono">LANGGRAPH_CORE</span>
+                <span className="text-white font-mono text-[9px] md:text-[10px]">LANGGRAPH_CORE</span>
               </div>
               <div className="flex items-center space-x-2 text-slate-300">
-                <span className="text-[10px]">👟</span>
+                <span className="text-[12px]">👟</span>
                 <span className="text-slate-400">BOOTS:</span>
-                <span className="text-white font-mono">REACT_THREADS</span>
+                <span className="text-white font-mono text-[9px] md:text-[10px]">REACT_THREADS</span>
               </div>
             </div>
 
@@ -181,11 +181,11 @@ export default function PlayerProfile({ cheatMode }) {
               </p>
               
               {/* Added Coursework context */}
-              <div className="border-t border-slate-900 pt-1.5 mt-1.5">
-                <span className="font-arcade text-[7px] text-slate-400 block mb-1">RELEVANT COURSEWORK:</span>
-                <span className="text-slate-400 text-[9px] leading-relaxed block">
+              <div className="border-t border-slate-900 pt-3 mt-3">
+                <span className="font-arcade text-[8px] text-arcade-pink block mb-1.5 glow-pink">RELEVANT COURSEWORK:</span>
+                <p className="text-slate-300 font-mono text-[10px] md:text-xs leading-normal">
                   Machine Learning, Deep Learning, Natural Language Processing, Artificial Intelligence, Cloud Computing, Algorithms, Data Structures, Databases.
-                </span>
+                </p>
               </div>
             </div>
           </div>

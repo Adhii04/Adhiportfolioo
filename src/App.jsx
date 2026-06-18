@@ -10,11 +10,9 @@ import Inventory from './components/Inventory';
 import Missions from './components/Missions';
 import HighScores from './components/HighScores';
 import FinalBoss from './components/FinalBoss';
-import DevTerminal from './components/DevTerminal';
 import AlienFlyby from './components/AlienFlyby';
 import { useKonami } from './hooks/useKonami';
 import { audio } from './utils/audio';
-import { Terminal } from 'lucide-react';
 
 export default function App() {
   const [gameState, setGameState] = useState('boot'); // boot, start, loading, gameplay
@@ -22,9 +20,9 @@ export default function App() {
   const [score, setScore] = useState(0);
   const [muted, setMuted] = useState(audio.isMuted());
   const [cheatMode, setCheatMode] = useState(false);
-  const [terminalOpen, setTerminalOpen] = useState(false);
   const [alienTrigger, setAlienTrigger] = useState(0);
   const [isPowerTransition, setIsPowerTransition] = useState(false);
+  const [credits, setCredits] = useState(1);
 
   // Mobile routing states
   const [isMobile, setIsMobile] = useState(false);
@@ -84,23 +82,7 @@ export default function App() {
     }, 400);
   };
 
-  // Setup keyboard listener for terminal "help" trigger or general keystroke detection
-  useEffect(() => {
-    let keysPressed = '';
-    const handleGlobalKeys = (e) => {
-      keysPressed += e.key.toLowerCase();
-      if (keysPressed.slice(-4) === 'help') {
-        setTerminalOpen(true);
-        audio.playSelect();
-        keysPressed = '';
-      }
-      if (keysPressed.length > 20) {
-        keysPressed = keysPressed.slice(-10);
-      }
-    };
-    window.addEventListener('keydown', handleGlobalKeys);
-    return () => window.removeEventListener('keydown', handleGlobalKeys);
-  }, []);
+
 
   const renderActiveScreen = () => {
     switch (activeTab) {
@@ -113,7 +95,7 @@ export default function App() {
       case 'scores':
         return <HighScores />;
       case 'boss':
-        return <FinalBoss />;
+        return <FinalBoss credits={credits} setCredits={setCredits} />;
       default:
         return <PlayerProfile cheatMode={cheatMode} />;
     }
@@ -127,7 +109,18 @@ export default function App() {
       {/* Main Arcade Cabinet - Expanded to occupy full screen */}
       <div className="w-full h-full flex flex-col overflow-hidden relative crt-cabinet">
           
-          <CabinetFrame score={score} muteState={muted} toggleMute={toggleMute}>
+          <CabinetFrame 
+            score={score} 
+            muteState={muted} 
+            toggleMute={toggleMute}
+            credits={credits}
+            addCredit={() => {
+              if (credits < 99) {
+                setCredits((c) => c + 1);
+                audio.playCoin();
+              }
+            }}
+          >
             
             {/* Conditional screens according to state machine */}
             {gameState === 'boot' && (
@@ -209,27 +202,7 @@ export default function App() {
                 {/* Space Invader Alien Easter Egg */}
                 <AlienFlyby triggerSpawn={alienTrigger} onHit={handleScoreIncrease} />
 
-                {/* Floating Developer Terminal Prompt Button */}
-                <button
-                  onClick={() => {
-                    audio.playSelect();
-                    setTerminalOpen(true);
-                  }}
-                  className="interactive cursor-none absolute bottom-4 right-4 z-40 bg-zinc-950/80 border-2 border-[#00FF7F] text-[#00FF7F] hover:border-retro-yellow hover:text-retro-yellow px-3 py-1.5 font-arcade text-[8px] flex items-center space-x-1.5 shadow-[0_0_8px_rgba(0,255,127,0.3)] transition-all"
-                  title="Type 'help' to unlock system console"
-                >
-                  <Terminal className="w-3 h-3" />
-                  <span className="hidden sm:inline">DEV_TERMINAL</span>
-                </button>
 
-                {/* Slide-over Developer Console Terminal */}
-                <DevTerminal
-                  isOpen={terminalOpen}
-                  onClose={() => setTerminalOpen(false)}
-                  onActivateCheat={onActivateCheat => activateCheatMode()}
-                  onSpawnAlien={handleSpawnAlien}
-                  currentScore={score}
-                />
 
               </div>
             )}

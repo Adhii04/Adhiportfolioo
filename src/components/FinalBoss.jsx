@@ -1,8 +1,27 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { audio } from '../utils/audio';
 import { Mail, Save } from 'lucide-react';
 
-export default function FinalBoss() {
+export default function FinalBoss({ credits, setCredits }) {
+  const [showError, setShowError] = useState(false);
+
+  const handleEmailClick = () => {
+    if (credits <= 0) {
+      audio.playBuzzer();
+      setShowError(true);
+      return;
+    }
+
+    setShowError(false);
+    setCredits((c) => c - 1);
+    audio.playSelect();
+
+    setTimeout(() => {
+      window.open('mailto:adhiishere04@gmail.com', '_blank');
+    }, 200);
+  };
+
   const handleContactClick = (url, isResume = false) => {
     if (isResume) {
       audio.playLevelUp(); // Level complete chime for saving game!
@@ -90,16 +109,17 @@ export default function FinalBoss() {
             
             {/* Email Button */}
             <button
-              onClick={() => handleContactClick('mailto:adhiishere04@gmail.com')}
+              onClick={handleEmailClick}
               className="interactive cursor-none h-20 bg-[#12082b] border-4 border-[#8A2BE2] hover:border-neon-cyan text-[#8A2BE2] hover:text-neon-cyan flex flex-col items-center justify-center relative active:translate-y-1 rounded shadow-[0_6px_0_#8A2BE2] active:shadow-none transition-all group"
             >
               <Mail className="w-5 h-5 mb-1 group-hover:animate-bounce" />
               <span className="font-arcade text-[9px] tracking-wider">SEND EMAIL</span>
+              <span className="font-arcade text-[7px] text-retro-yellow mt-1">COST: 1 CREDIT</span>
             </button>
 
             {/* LinkedIn Button */}
             <button
-              onClick={() => handleContactClick('https://linkedin.com/in/adithya-balasubramani')}
+              onClick={() => handleContactClick('https://www.linkedin.com/in/adithya-balasubramani-4ab747352/')}
               className="interactive cursor-none h-20 bg-[#12082b] border-4 border-[#00F5FF] hover:border-arcade-pink text-[#00F5FF] hover:text-arcade-pink flex flex-col items-center justify-center relative active:translate-y-1 rounded shadow-[0_6px_0_#00F5FF] active:shadow-none transition-all group"
             >
               <svg 
@@ -150,6 +170,12 @@ export default function FinalBoss() {
             </button>
 
           </div>
+
+          {showError && (
+            <div className="bg-red-950/80 border-2 border-red-500 p-2 text-center font-arcade text-[8px] text-red-400 animate-pulse mt-4">
+              ⚠️ NO CREDITS! INSERT COIN (25¢) AT THE BOTTOM OF THE CABINET OR CLICK 'CREDIT' ON TOP.
+            </div>
+          )}
 
           <div className="mt-6 text-[8px] font-arcade text-slate-500 text-center">
             * Warning: Recruiting Adithya adds +99 attack to your dev team *

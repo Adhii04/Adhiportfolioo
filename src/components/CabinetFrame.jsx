@@ -2,8 +2,7 @@ import { Volume2, VolumeX } from 'lucide-react';
 import { audio } from '../utils/audio';
 import { useState, useEffect } from 'react';
 
-export default function CabinetFrame({ children, score, muteState, toggleMute }) {
-  const [credits, setCredits] = useState(1);
+export default function CabinetFrame({ children, score, muteState, toggleMute, credits, addCredit }) {
 
   // Periodic insert coin blinking
   useEffect(() => {
@@ -13,12 +12,7 @@ export default function CabinetFrame({ children, score, muteState, toggleMute })
     }
   }, [muteState]);
 
-  const addCredit = () => {
-    if (credits < 99) {
-      setCredits((c) => c + 1);
-      audio.playCoin();
-    }
-  };
+
 
   return (
     <div className="w-full h-full flex flex-col justify-between bg-[#080315] text-[#00F5FF] relative overflow-hidden select-none">
